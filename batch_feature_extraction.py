@@ -3,12 +3,15 @@
 
 import cls_feature_class
 
-process_str = 'dev, eval'  # 'dev' or 'eval' will extract features for the respective set accordingly
+process_str = 'eval'
+#process_str = 'dev, eval'  # 'dev' or 'eval' will extract features for the respective set accordingly
 #  'dev, eval' will extract features of both sets together
 
 dataset_name = 'foa'  # 'foa' -ambisonic or 'mic' - microphone signals
-dataset_dir = '/proj/asignal/DCASE2019/dataset/'   # Base folder containing the foa/mic and metadata folders
-feat_label_dir = '/proj/asignal/DCASE2019/dataset/feat_label_tmp/'  # Directory to dump extracted features and labels
+#dataset_dir = '/proj/asignal/DCASE2019/dataset/'   # Base folder containing the foa/mic and metadata folders
+dataset_dir='/home/serafeim/tfdata/dataset/'  # Base folder containing the foa/mic and metadata folders
+#feat_label_dir = '/proj/asignal/DCASE2019/dataset/feat_label_tmp/'  # Directory to dump extracted features and labels
+feat_label_dir='/home/serafeim/tfdata/dataset/feat_label/'  # Directory to dump extracted features and labels
 
 
 if 'dev' in process_str:

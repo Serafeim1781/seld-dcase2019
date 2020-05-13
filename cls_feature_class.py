@@ -1,12 +1,15 @@
 # Contains routines for labels creation, features extraction and normalization
-#
+# Copied from Adavanne's seld-dcase2019
+# Made some changes:
+#   Add mel export
 
 
 import os
 import numpy as np
 import scipy.io.wavfile as wav
 from sklearn import preprocessing
-from sklearn.externals import joblib
+#from sklearn.externals import joblib
+import joblib
 from IPython import embed
 import matplotlib.pyplot as plot
 import librosa
@@ -37,7 +40,7 @@ class FeatureClass:
         # Local parameters
         self._is_eval = is_eval
 
-        self._fs = 48000
+        self._fs = 48000  # sampled at 48000Hz
         self._hop_len_s = 0.02
         self._hop_len = int(self._fs * self._hop_len_s)
         self._frame_res = self._fs / float(self._hop_len)
@@ -118,8 +121,9 @@ class FeatureClass:
 
     def _extract_spectrogram_for_file(self, audio_filename):
         audio_in, fs = self._load_audio(os.path.join(self._aud_dir, audio_filename))
-        audio_spec = self._spectrogram(audio_in)
-        # print('\t{}'.format(audio_spec.shape))
+        # audio_spec = self._spectrogram(audio_in)
+        audio_spec = self._spectrogram(np.asfortranarray(audio_in))
+        print('\t{}'.format(audio_spec.shape))
         np.save(os.path.join(self._feat_dir, '{}.npy'.format(audio_filename.split('.')[0])), audio_spec.reshape(self._max_frames, -1))
 
     # OUTPUT LABELS
@@ -234,6 +238,7 @@ class FeatureClass:
         for file_cnt, file_name in enumerate(os.listdir(self._aud_dir)):
             print('{}: {}'.format(file_cnt, file_name))
             wav_filename = '{}.wav'.format(file_name.split('.')[0])
+            print(wav_filename)
             self._extract_spectrogram_for_file(wav_filename)
 
     def preprocess_features(self):

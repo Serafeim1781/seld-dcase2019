@@ -272,8 +272,5 @@ class DataGenerator(object):
     def get_nb_frames(self):
         return self._feat_cls._max_frames
 
-    def get_nb_frames(self):
-        return self._feat_cls.get_nb_frames()
-
 
 

@@ -10,7 +10,9 @@ import cls_feature_class
 import cls_data_generator
 from metrics import evaluation_metrics
 import keras_model
-from keras.models import load_model
+#from keras.models import load_model
+import tensorflow as tf
+load_model =  tf.keras.models.load_model
 import parameter
 import time
 
@@ -95,15 +97,15 @@ def main(argv):
 
     train_splits, val_splits, test_splits = None, None, None
     if params['mode'] == 'dev':
-        test_splits = [1, 2, 3, 4]
-        val_splits = [2, 3, 4, 1]
-        train_splits = [[3, 4], [4, 1], [1, 2], [2, 3]]
+        # test_splits = [1, 2, 3, 4]
+        # val_splits = [2, 3, 4, 1]
+        # train_splits = [[3, 4], [4, 1], [1, 2], [2, 3]]
 
         # SUGGESTION: Considering the long training time, major tuning of the method can be done on the first split.
         # Once you finlaize the method you can evaluate its performance on the complete cross-validation splits
-        # test_splits = [1]
-        # val_splits = [2]
-        # train_splits = [[3, 4]]
+        test_splits = [1]
+        val_splits = [2]
+        train_splits = [[3, 4]]
 
     elif params['mode'] == 'eval':
         test_splits = [0]
