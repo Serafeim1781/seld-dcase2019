@@ -37,29 +37,29 @@ def get_model(data_in, data_out, dropout_rate, nb_cnn2d_filt, pool_size,
     spec_start = Input(shape=(data_in[-3], data_in[-2], data_in[-1]))
 
     # CNN
-    # spec_cnn = spec_start
-    spec_cnn = keras.Sequential([spec_start])
+    spec_cnn = spec_start
+    # spec_cnn = keras.Sequential([spec_start])
     for i, convCnt in enumerate(pool_size):
-        # spec_cnn = Conv2D(filters=nb_cnn2d_filt, kernel_size=(3, 3), padding='same')(spec_cnn)
-        spec_cnn.add(Conv2D(filters=nb_cnn2d_filt, kernel_size=(3, 3), padding='same'))
-        # spec_cnn = BatchNormalization()(spec_cnn)
-        spec_cnn.add(BatchNormalization())
-        # spec_cnn = Activation('relu')(spec_cnn)
-        spec_cnn.add(Activation('relu'))
-        # spec_cnn = MaxPooling2D(pool_size=(1, pool_size[i]))(spec_cnn)
-        spec_cnn.add(MaxPooling2D(pool_size=(1, pool_size[i])))
-        # spec_cnn = Dropout(dropout_rate)(spec_cnn)
-        spec_cnn.add(Dropout(dropout_rate))
-    # spec_cnn = Permute((2, 1, 3))(spec_cnn)
-    spec_cnn.add(Permute((2, 1, 3)))
+        spec_cnn = Conv2D(filters=nb_cnn2d_filt, kernel_size=(3, 3), padding='same')(spec_cnn)
+        # spec_cnn.add(Conv2D(filters=nb_cnn2d_filt, kernel_size=(3, 3), padding='same'))
+        spec_cnn = BatchNormalization()(spec_cnn)
+        # spec_cnn.add(BatchNormalization())
+        spec_cnn = Activation('relu')(spec_cnn)
+        # spec_cnn.add(Activation('relu'))
+        spec_cnn = MaxPooling2D(pool_size=(1, pool_size[i]))(spec_cnn)
+        # spec_cnn.add(MaxPooling2D(pool_size=(1, pool_size[i])))
+        spec_cnn = Dropout(dropout_rate)(spec_cnn)
+        # spec_cnn.add(Dropout(dropout_rate))
+    spec_cnn = Permute((2, 1, 3))(spec_cnn)
+    # spec_cnn.add(Permute((2, 1, 3)))
 
     # RNN
-    # spec_rnn = Reshape((data_in[-2], -1))(spec_cnn)
-    spec_rnn = keras.models.clone_model(spec_cnn)
-    spec_rnn.add(Reshape((data_in[-2], -1)))
-    print("----shape={}".format(spec_cnn.shape))
-    print("----rnn_size={}".format(rnn_size))#----nb_rnn_filt={}\n
-    spec_cnn.summary()
+    spec_rnn = Reshape((data_in[-2], -1))(spec_cnn)
+    # spec_rnn = keras.models.clone_model(spec_cnn)
+    # spec_rnn.add(Reshape((data_in[-2], -1)))
+    # print("----shape={}".format(spec_cnn.shape))
+    # print("----rnn_size={}".format(rnn_size))#----nb_rnn_filt={}\n
+    # spec_cnn.summary()
     # print("----spec_rnn.output_shape={}".format(spec_rnn.output_shape))
     for nb_rnn_filt in rnn_size:
         # spec_rnn 
@@ -67,8 +67,8 @@ def get_model(data_in, data_out, dropout_rate, nb_cnn2d_filt, pool_size,
             GRU(nb_rnn_filt, activation='tanh', dropout=dropout_rate, recurrent_dropout=dropout_rate,
                 return_sequences=True),
             merge_mode='mul'
-        )#(spec_rnn)
-        bi.summary()
+        )(spec_rnn)
+        # bi.summary()
         # print("----bi.shape={}".format(bi.shape))
         spec_rnn.add(bi)
 
