@@ -12,10 +12,11 @@ def get_params(argv):
 
         # INPUT PATH
 #        dataset_dir='/proj/asignal/DCASE2019/dataset/',  # Base folder containing the foa/mic and metadata folders
-        dataset_dir='/home/serafeim/tfdata/dataset/dataset/',  # Base folder containing the foa/mic and metadata folders
-
+#        dataset_dir='/home/serafeim/tfdata/dataset/dataset/',  # Base folder containing the foa/mic and metadata folders
+        dataset_dir='/content/drive/My Drive/ERGASIADNN/rawdata',
         # OUTPUT PATH
-        feat_label_dir='/home/serafeim/tfdata/dataset/feat_label/',  # Directory to dump extracted features and labels
+#         feat_label_dir='/home/serafeim/tfdata/dataset/feat_label/',  # Directory to dump extracted features and labels
+        feat_label_dir='/content/drive/My Drive/ERGASIADNN/feat_label_tmp/',
         model_dir='models/',   # Dumps the trained models and training curves in this folder
         dcase_output=True,     # If true, dumps the results recording-wise in 'dcase_dir' path.
                                # Set this true after you have finalized your model, save the output, and submit
