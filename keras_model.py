@@ -54,7 +54,7 @@ def get_model(data_in, data_out, dropout_rate, nb_cnn2d_filt, pool_size,
     # spec_cnn.add(Permute((2, 1, 3)))
 
     # RNN
-    spec_rnn = Reshape((data_in[-2], 64*4))(spec_cnn) # na ntikatastiso to 64*4 me tis kataliles diastasis tou Permute tensor
+    spec_rnn = Reshape((-1, data_in[-2], 64*4))(spec_cnn) # na ntikatastiso to 64*4 me tis kataliles diastasis tou Permute tensor
     # spec_rnn = keras.models.clone_model(spec_cnn)
     # spec_rnn.add(Reshape((data_in[-2], -1)))
     # print("----shape={}".format(spec_cnn.shape))
